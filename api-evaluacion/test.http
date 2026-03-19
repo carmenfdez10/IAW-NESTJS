@@ -1,0 +1,35 @@
+### 1. CREAR UN ALUMNO
+POST http://localhost:3000/alumno
+Content-Type: application/json
+
+{
+  "nif": "12345678A",
+  "nombre": "Carlos",
+  "apellido1": "Ruiz",
+  "apellido2": "Gomez",
+  "grupo": "2º ASIR"
+}
+
+### 2. CREAR UNA PRÁCTICA
+POST http://localhost:3000/practica
+Content-Type: application/json
+
+{
+  "titulo": "Instalación de Servidores",
+  "dificultad": "Media"
+}
+
+### 3. REGISTRAR UNA NOTA (EVALUACIÓN)
+# Aquí unimos al Alumno (ID 1) con la Práctica (ID 1)
+POST http://localhost:3000/evaluacion/practica
+Content-Type: application/json
+
+{
+  "alumnoId": 1,
+  "practicaId": 1,
+  "fecha": "2024-05-20",
+  "nota": 8.5
+}
+
+### 4. VER LOS RESULTADOS CON LAS RELACIONES
+GET http://localhost:3000/evaluacion/practicas
