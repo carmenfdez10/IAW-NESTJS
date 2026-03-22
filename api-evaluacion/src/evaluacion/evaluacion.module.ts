@@ -8,7 +8,7 @@ import { ProfesorDisenaPractica } from './entities/profesor-disena-practica.enti
 
 @Module({
   imports: [
-    // Aquí registramos las 3 tablas intermedias para que el Servicio pueda usarlas
+    // Registro de las 3 tablas intermedias para que el Servicio pueda usarlas
     TypeOrmModule.forFeature([
       AlumnoRealizaPractica,
       AlumnoHaceExamen,

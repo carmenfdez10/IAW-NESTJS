@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm'; // Importa esto
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlumnoService } from './alumno.service';
 import { AlumnoController } from './alumno.controller';
-import { Alumno } from './entities/alumno.entity'; // Importa tu entidad
+import { Alumno } from './entities/alumno.entity'; 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Alumno]), // ¡ESTA LÍNEA ES VITAL!
+    TypeOrmModule.forFeature([Alumno]), 
   ],
   controllers: [AlumnoController],
   providers: [AlumnoService],
-  exports: [TypeOrmModule] // Opcional, pero ayuda
+  exports: [TypeOrmModule]
 })
 export class AlumnoModule {}

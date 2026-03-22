@@ -24,7 +24,7 @@ export class EvaluacionController {
     return this.evaluacionService.registrarDisenoPractica(dto);
   }
 
-  // 4. Listar todas las notas de prácticas (útil para el vídeo)
+  // 4. Listar todas las notas de prácticas (para el vídeo)
   @Get('practicas')
   listarPracticas() {
     return this.evaluacionService.obtenerResultadosPracticas();
