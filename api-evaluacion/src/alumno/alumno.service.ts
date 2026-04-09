@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Alumno } from './entities/alumno.entity';
@@ -26,12 +26,25 @@ export class AlumnoService {
   }
 
   async update(id: number, updateAlumnoDto: UpdateAlumnoDto) {
-    await this.alumnoRepo.update(id, updateAlumnoDto);
-    return this.findOne(id);
-  }
+    // 1. Buscamos si existe
+    const alumno = await this.alumnoRepo.findOneBy({ id });
+        
+    if (!alumno) {
+      throw new NotFoundException(`Alumno con ID ${id} no encontrado`);
+    }
+
+    // 2. Mezclamos los datos antiguos con los nuevos
+    const alumnoActualizado = Object.assign(alumno, updateAlumnoDto);
+
+    // 3. Guardamos
+    return await this.alumnoRepo.save(alumnoActualizado);
+    }
 
   async remove(id: number) {
-    await this.alumnoRepo.delete(id);
+    const alumno = await this.alumnoRepo.findOneBy({ id });
+    if (!alumno) throw new NotFoundException(`Alumno con ID ${id} no existe`);
+
+    await this.alumnoRepo.remove(alumno);
     return { deleted: true };
   }
 }

@@ -6,7 +6,7 @@ import { Practica } from './entities/practica.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Practica]), // ¡AÑADE ESTO!
+    TypeOrmModule.forFeature([Practica]),
   ],
   controllers: [PracticaController],
   providers: [PracticaService],

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Practica } from './entities/practica.entity';
@@ -9,11 +9,11 @@ import { UpdatePracticaDto } from './dto/update-practica.dto';
 export class PracticaService {
   constructor(
     @InjectRepository(Practica)
-    private practicaRepo: Repository<Practica>,
+    private readonly practicaRepo: Repository<Practica>,
   ) {}
 
-  async create(createPracticaDto: CreatePracticaDto) {
-    const nueva = this.practicaRepo.create(createPracticaDto);
+  async create(dto: CreatePracticaDto) {
+    const nueva = this.practicaRepo.create(dto);
     return await this.practicaRepo.save(nueva);
   }
 
@@ -22,16 +22,20 @@ export class PracticaService {
   }
 
   async findOne(id: number) {
-    return await this.practicaRepo.findOneBy({ id });
+    const practica = await this.practicaRepo.findOneBy({ id });
+    if (!practica) throw new NotFoundException(`Práctica ${id} no encontrada`);
+    return practica;
   }
 
-  async update(id: number, updatePracticaDto: UpdatePracticaDto) {
-    await this.practicaRepo.update(id, updatePracticaDto);
-    return this.findOne(id);
+  async update(id: number, dto: UpdatePracticaDto) {
+    const practica = await this.findOne(id);
+    const actualizada = Object.assign(practica, dto);
+    return await this.practicaRepo.save(actualizada);
   }
 
   async remove(id: number) {
-    await this.practicaRepo.delete(id);
+    const practica = await this.findOne(id);
+    await this.practicaRepo.remove(practica);
     return { deleted: true };
   }
 }

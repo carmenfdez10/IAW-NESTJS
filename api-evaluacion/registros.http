@@ -1,0 +1,62 @@
+### Crear alumno
+POST http://localhost:3000/alumno
+Content-Type: application/json
+
+{
+  "nif": "12345678X",
+  "nombre": "Pepe",
+  "apellido1": "García",
+  "apellido2": "García",
+  "grupo": "A"
+}
+
+### Ver los alumnos creados
+GET http://localhost:3000/alumno
+
+
+### Crear profesor
+POST http://localhost:3000/profesor
+Content-Type: application/json
+
+{
+    "nif": "88888889Z", 
+    "nombre": "Albert", 
+    "apellido1": "Einstein",
+    "apellido2": "Einstein"
+}
+
+### Ver los profesores creados
+GET http://localhost:3000/profesor
+
+### Crear una practica
+POST http://localhost:3000/practica
+Content-Type: application/json
+
+{
+  "titulo": "NestJS", 
+  "dificultad": "Baja"
+}
+
+### Ver las practicas creadas
+GET http://localhost:3000/practica
+
+
+### Probar el Recurso "Evaluación" (El CRUD $N:N$) Crear una calificacion
+POST http://localhost:3000/evaluacion/practica
+Content-Type: application/json
+
+{
+  "alumnoId": 2,
+  "practicaId": 2,
+  "fecha": "2026-04-05",
+  "nota": 6
+}
+
+####Listar y Ver uno (GET)
+GET http://localhost:3000/evaluacion/practica
+
+### Actualizar la nota (PATCH) - ¡Punto Clave!
+PATCH http://localhost:3000/evaluacion/practica/5
+
+###Borrar la calificación (DELETE)
+DELETE http://localhost:3000/evaluacion/practica/5
